@@ -1,0 +1,170 @@
+$color-white: #fff;
+$color-gray: #e5e5e5;
+$color-gray-light: #e4e4e4;
+
+$mobile-breakpoint: 480px;
+$tablet-breakpoint: 768px;
+$max-width-breakpoint: 1366px;
+
+@mixin onDesktop {
+	@media (min-width: calc(#{$tablet-breakpoint} + 1px)) {
+		@content;
+	}
+}
+
+@mixin onTablet {
+	@media (min-width: calc(#{$mobile-breakpoint} + 1px)) and (max-width: $tablet-breakpoint) {
+		@content;
+	}
+}
+@mixin onTabletAndMobile {
+	@media (max-width: $tablet-breakpoint) {
+		@content;
+	}
+}
+
+@mixin onMobile {
+	@media (max-width: $mobile-breakpoint) {
+		@content;
+	}
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html {
+	font-size: 62.5%;
+}
+
+body {
+	background-color: $color-gray;
+	font-family: "Poppins", sans-serif;
+}
+
+.main-box {
+	background-color: $color-white;
+	max-width: $max-width-breakpoint;
+	margin: auto;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(5rem, 1fr));
+	grid-auto-rows: auto-fit;
+	font-size: 2.5rem;
+
+	@include onTablet {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@include onMobile {
+		grid-template-columns: minmax(10rem, 1fr);
+	}
+
+	&__element {
+		background: $color-white;
+		border: solid 0.1rem $color-gray-light;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+
+		&.left-message {
+			span {
+				top: 5rem;
+				left: 3rem;
+				position: relative;
+			}
+		}
+		&.title {
+			@include onTabletAndMobile {
+				display: none;
+			}
+			.title-container {
+				display: flex;
+				justify-content: space-between;
+				padding: 5rem 2rem;
+				h1 {
+					display: inline-block;
+				}
+				a {
+					text-decoration: none;
+					color: darken($color-gray-light, 20%);
+					margin-right: 1.5rem;
+				}
+			}
+		}
+		&.btn-box {
+			position: relative;
+			.btn {
+				border: none;
+				position: absolute;
+				top: 5rem;
+				right: 2rem;
+				i {
+					font-size: 3rem;
+					background: none;
+				}
+			}
+		}
+		&.subtitle {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 2rem;
+			color: darken($color-gray-light, 20%);
+
+			&.reverse {
+				flex-direction: column-reverse;
+			}
+			:first-child {
+				font-size: 1.8rem;
+			}
+			.title {
+				margin-bottom: 1.3rem;
+				font-size: 3rem;
+				color: black;
+			}
+			.type {
+				font-size: 1.2rem;
+			}
+		}
+		&.img-box {
+			overflow: hidden;
+			img {
+				object-fit: cover;
+				height: 100%;
+				width: 100%;
+				object-position: center;
+			}
+		}
+
+		&.col {
+			&-2 {
+				aspect-ratio: 2 / 1;
+				grid-column: span 2;
+
+				@include onMobile {
+					aspect-ratio: 1 / 1;
+				}
+			}
+		}
+	}
+	@include onTabletAndMobile {
+		& .empty {
+			display: none;
+		}
+		& .img-box {
+			grid-column: span 1;
+			height: 100%;
+			width: 100%;
+		}
+	}
+}
+.footer {
+	max-width: $max-width-breakpoint;
+	margin: auto;
+	background-color: darken($color-gray-light, 60%);
+	color: $color-white;
+	font-size: 1.5rem;
+	height: 6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
